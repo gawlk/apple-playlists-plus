@@ -118,7 +118,7 @@
 
     const client = createClient()
 
-    const queue = ref([])
+    const queue = []
 
     export const cursorBefore = ref(null)
 
@@ -206,7 +206,7 @@
             }
         `
 
-        queue.value.push(query)
+        queue.push(query)
 
         let result = await client.executeQuery({
             query,
@@ -215,13 +215,13 @@
         if (result && result.data) {
             result = result.data[queryName]
 
-            if (queue.value[queue.value.length - 1] === query) {
+            if (queue[queue.length - 1] === query) {
                 cursorBefore.value = result.before
                 playlists.value = result.data
                 cursorAfter.value = result.after
             }
 
-            queue.value.shift()
+            queue.shift()
         } else {
             console.error(result)
         }

@@ -33,6 +33,8 @@
 
     export const songs = ref([])
 
+    const queue = []
+
     export const songToValue = (song) =>
         `${song.name} - Artist(s): ${song.artists.data
             .map((y) => y.name)
@@ -86,28 +88,36 @@
         input.value = value
 
         if (value) {
-            let result = await client.executeQuery({
-                query: `
-                    {
-                        findSongsByPhrase(
-                            phrase: "${value}",
-                            _size: 100000,
-                        ) {
-                            data {
-                                _id
-                                name
-                                artists {
-                                    data {
-                                        name
-                                    }
+            const query = `
+                {
+                    findSongsByPhrase(
+                        phrase: "${value}",
+                        _size: 100000,
+                    ) {
+                        data {
+                            _id
+                            name
+                            artists {
+                                data {
+                                    name
                                 }
                             }
                         }
                     }
-                `,
+                }
+            `
+
+            queue.push(query)
+
+            const result = await client.executeQuery({
+                query,
             })
 
-            songs.value = result.data.findSongsByPhrase.data
+            if (queue[queue.length - 1] === query) {
+                songs.value = result.data.findSongsByPhrase.data
+            }
+
+            queue.shift()
         } else {
             songs.value = []
 

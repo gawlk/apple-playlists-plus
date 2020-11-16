@@ -33,6 +33,8 @@
 
     export const artists = ref([])
 
+    const queue = []
+
     const getNameByID = async (id) => {
         if (id) {
             let result = await client.executeQuery({
@@ -70,23 +72,31 @@
         input.value = value
 
         if (value) {
-            let result = await client.executeQuery({
-                query: `
-                    {
-                        findArtistsByPhrase(
-                            phrase: "${value}",
-                            _size: 100000,
-                        ) {
-                            data {
-                                _id
-                                name
-                            }
+            const query = `
+                {
+                    findArtistsByPhrase(
+                        phrase: "${value}",
+                        _size: 100000,
+                    ) {
+                        data {
+                            _id
+                            name
                         }
                     }
-                `,
+                }
+            `
+
+            queue.push(query)
+
+            const result = await client.executeQuery({
+                query,
             })
 
-            artists.value = result.data.findArtistsByPhrase.data
+            if (queue[queue.length - 1] === query) {
+                artists.value = result.data.findArtistsByPhrase.data
+            }
+
+            queue.shift()
         } else {
             artists.value = []
             emit('reset')
