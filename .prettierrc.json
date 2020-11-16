@@ -1,0 +1,14 @@
+{
+  "semi": false,
+  "singleQuote": true,
+  "tabWidth": 4,
+  "vueIndentScriptAndStyle": true,
+  "overrides": [
+    {
+      "files": ["*.config.js", "*.json"],
+      "options": {
+        "tabWidth": 2
+      }
+    }
+  ]
+}

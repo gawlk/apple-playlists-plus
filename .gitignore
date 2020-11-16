@@ -1,0 +1,30 @@
+# ---
+# Local
+# ---
+
+*.local
+
+# ---
+# Mac OS
+# ---
+
+.DS_Store
+* 2*
+
+# ---
+# Node
+# ---
+
+node_modules
+
+# ---
+# Production
+# ---
+
+dist
+
+# ---
+# Vercel
+# ---
+
+.vercel

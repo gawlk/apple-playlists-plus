@@ -1,0 +1,23 @@
+{
+  "name": "apple-playlists-plus",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@headlessui/vue": "^0.2.0",
+    "graphql": "^15.4.0",
+    "villus": "^1.0.0-rc.4",
+    "vue": "^3.0.2"
+  },
+  "devDependencies": {
+    "@tailwindcss/ui": "^0.7.2",
+    "@vue/compiler-sfc": "^3.0.2",
+    "autoprefixer": "^9.0.0",
+    "sirv-cli": "^1.0.8",
+    "tailwindcss": "^1.9.6",
+    "vercel": "^20.1.4",
+    "vite": "1.0.0-rc.9"
+  }
+}
