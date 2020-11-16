@@ -1,13 +1,16 @@
 <template>
-    <Listbox
-        :elements="data?.allGenres?.data.map((x) => x.name).sort() || []"
-        :selectedValue="selectedValue"
-        @select="select"
-        defaultEmpty
-        placeholder="Select a genre"
-        roundedClasses="rounded-lg xs:rounded-l-none"
-        class="flex-1"
-    />
+    <div class="flex-1 flex space-x-1">
+        <Listbox
+            :elements="data?.allGenres?.data.map((x) => x.name).sort() || []"
+            :selectedValue="selectedValue"
+            @select="select"
+            defaultEmpty
+            placeholder="Select a genre"
+            roundedClasses="rounded-l-lg sm:rounded-l-none"
+            class="flex-1"
+        />
+        <ButtonReset @click="select()" />
+    </div>
 </template>
 
 <script setup="props, { emit }">
@@ -16,12 +19,13 @@
 
     import { getParams, setParam } from '/src/js/utils'
 
-    export { default as Listbox } from '/src/components/Listbox.vue'
+    export { default as ButtonReset } from './ButtonReset.vue'
+    export { default as Listbox } from './Listbox.vue'
 
     export const selectedValue = ref('')
 
     export const select = (value) => {
-        if (selectedValue.value === value) {
+        if (!value || selectedValue.value === value) {
             selectedValue.value = ''
             emit('reset')
         } else {

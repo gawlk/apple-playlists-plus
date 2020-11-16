@@ -1,17 +1,19 @@
 <template>
-    <div class="max-w-5xl w-full min-h-screen mx-auto px-4 py-12 space-y-24">
+    <div
+        class="max-w-5xl w-full min-h-screen mx-auto px-4 pt-12 pb-16 space-y-24"
+    >
         <Header />
 
         <main class="space-y-16">
             <div class="space-y-2">
-                <div class="w-full xs:flex space-y-1 xs:space-y-0 xs:space-x-1">
+                <div class="w-full sm:flex space-y-1 sm:space-y-0 sm:space-x-1">
                     <Listbox
                         :elements="options.map((x) => x.name)"
                         :icons="options.map((x) => x.icon)"
                         :selectedValue="options[selectedIndex].name"
                         @selectIndex="select"
-                        roundedClasses="rounded-lg xs:rounded-r-none"
-                        class="w-full xs:w-36 sm:w-48"
+                        roundedClasses="rounded-lg sm:rounded-r-none"
+                        class="w-full sm:w-48"
                     />
                     <InputArtist
                         v-if="selectedIndex === 0"

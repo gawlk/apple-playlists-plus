@@ -1,17 +1,20 @@
 <template>
-    <div class="flex-1 relative">
-        <input
-            :value="input"
-            @input="process($event.target.value)"
-            placeholder="Write the name of a song here"
-            class="w-full bg-gray-800 rounded-lg xs:rounded-l-none px-4 py-3 font-medium focus:outline-none placeholder-gray-500"
-        />
-        <ListboxOptions
-            :elements="songs.map((x) => songToValue(x))"
-            :open="songs.length > 0"
-            @selectIndex="select"
-            class="w-48"
-        />
+    <div class="flex-1 relative flex space-x-1">
+        <div class="w-full">
+            <input
+                :value="input"
+                @input="process($event.target.value)"
+                placeholder="Write the name of a song here"
+                class="w-full bg-gray-800 rounded-l-lg sm:rounded-l-none px-4 py-3 font-medium focus:outline-none placeholder-gray-500"
+            />
+            <ListboxOptions
+                :elements="songs.map((x) => songToValue(x))"
+                :open="songs.length > 0"
+                @selectIndex="select"
+                class="w-48"
+            />
+        </div>
+        <ButtonReset @click="process('')" />
     </div>
 </template>
 
@@ -21,6 +24,7 @@
     import { createClient } from '/src/js/clients'
     import { getParams, setParam } from '/src/js/utils'
 
+    export { default as ButtonReset } from './ButtonReset.vue'
     export { default as ListboxOptions } from './ListboxOptions.vue'
 
     const client = createClient()
