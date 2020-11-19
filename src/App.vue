@@ -105,18 +105,20 @@
     import { createClient, useClient } from '/src/js/clients'
     import { getParams, setParam } from '/src/js/utils'
 
-    export { default as Button } from '/src/components/Button.vue'
+    export { default as Button } from '/src/components/buttons/Button.vue'
     export { default as Card } from '/src/components/Card.vue'
     export { default as Footer } from '/src/components/Footer.vue'
     export { default as Header } from '/src/components/Header.vue'
-    export { default as InputArtist } from '/src/components/InputArtist.vue'
-    export { default as InputGenres } from '/src/components/InputGenres.vue'
-    export { default as InputSong } from '/src/components/InputSong.vue'
-    export { default as InputWords } from '/src/components/InputWords.vue'
-    export { default as Listbox } from '/src/components/Listbox.vue'
+    export { default as InputArtist } from '/src/components/inputs/InputArtist.vue'
+    export { default as InputGenres } from '/src/components/inputs/InputGenres.vue'
+    export { default as InputSong } from '/src/components/inputs/InputSong.vue'
+    export { default as InputWords } from '/src/components/inputs/InputWords.vue'
+    export { default as Listbox } from '/src/components/listboxes/Listbox.vue'
     export { default as Spinner } from '/src/components/Spinner.vue'
 
     const client = createClient()
+
+    useClient()
 
     const queue = []
 
@@ -127,18 +129,6 @@
     export const playlists = ref()
 
     export const selectedIndex = ref(0)
-
-    export const select = (index) => {
-        const { mode } = getParams()
-
-        if (Number(mode) !== index) {
-            setParam('mode', index)
-            selectedIndex.value = index
-            fetchPlaylists()
-        }
-    }
-
-    useClient()
 
     export const { data: counterArtists } = useQuery({
         query: `{ countArtists }`,
@@ -155,6 +145,16 @@
     export const { data: counterSongs } = useQuery({
         query: `{ countSongs }`,
     })
+
+    export const select = (index) => {
+        const { mode } = getParams()
+
+        if (Number(mode) !== index) {
+            setParam('mode', index)
+            selectedIndex.value = index
+            fetchPlaylists()
+        }
+    }
 
     const fetchPlaylists = async () => {
         const { cursor, mode, value } = getParams()

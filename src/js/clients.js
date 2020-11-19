@@ -7,7 +7,6 @@ import {
 const url = 'https://graphql.fauna.com/graphql'
 
 function authPlugin({ opContext }) {
-    // opContext.headers.Authorization = `Bearer fnAD6c--b_ACBze_mAP8WlXq5pTxJvxku5CumgrN`
     opContext.headers.Authorization = `Bearer fnAD6u4XpvACAjur4Q02kt-SUVZSPOrpc72HcCNb`
 }
 

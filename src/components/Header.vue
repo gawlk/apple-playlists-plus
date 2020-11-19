@@ -1,11 +1,8 @@
 <template>
     <header class="text-center flex flex-col justify-center -space-y-2">
         <a :href="url">
-            <img
-                src="https://cdn.dribbble.com/users/3865/screenshots/14402315/media/0b9d782e67adda99cfe0c0b136f57434.png"
-                class="h-auto w-48 sm:w-72 mx-auto"
-            />
-            <div class="-space-y-1">
+            <img src="apple-music.png" class="h-auto w-48 sm:w-72 mx-auto" />
+            <div class="space-y-1">
                 <p
                     style="color: #ffe9eb"
                     class="text-4xl sm:text-6xl font-bold"

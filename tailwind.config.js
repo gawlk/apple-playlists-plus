@@ -1,6 +1,4 @@
 const defaultConfig = require('tailwindcss/defaultConfig')
-// const defaultTheme = require('tailwindcss/defaultTheme')
-const tailwindUI = require('@tailwindcss/ui')
 
 module.exports = {
   purge: {
@@ -26,6 +24,10 @@ module.exports = {
       xs: '420px',
       ...defaultConfig.theme.screens,
     },
+    extend: {
+      margin: {
+        13: '3.25rem',
+      },
+    },
   },
-  plugins: [tailwindUI({})],
 }

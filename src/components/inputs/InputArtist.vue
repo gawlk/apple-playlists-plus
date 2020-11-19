@@ -1,11 +1,10 @@
 <template>
     <div class="flex-1 relative flex space-x-1">
         <div class="w-full">
-            <input
+            <Input
                 :value="input"
                 @input="process($event.target.value)"
                 placeholder="Write the name of an artist here"
-                class="w-full bg-gray-800 rounded-l-lg sm:rounded-l-none px-4 py-3 font-medium focus:outline-none placeholder-gray-500"
             />
             <ListboxOptions
                 :elements="artists.map((x) => x.name)"
@@ -24,8 +23,9 @@
     import { createClient } from '/src/js/clients'
     import { getParams, setParam } from '/src/js/utils'
 
-    export { default as ButtonReset } from './ButtonReset.vue'
-    export { default as ListboxOptions } from './ListboxOptions.vue'
+    export { default as ButtonReset } from '../buttons/ButtonReset.vue'
+    export { default as ListboxOptions } from '../listboxes/ListboxOptions.vue'
+    export { default as Input } from './Input.vue'
 
     const client = createClient()
 
@@ -76,7 +76,7 @@
                 {
                     findArtistsByPhrase(
                         phrase: "${value}",
-                        _size: 100000,
+                        _size: 500,
                     ) {
                         data {
                             _id

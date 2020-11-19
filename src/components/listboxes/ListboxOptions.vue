@@ -17,7 +17,7 @@
                     :key="`${index}-${element}`"
                     :value="element"
                     @click="select(element, index)"
-                    class="focus:outline-none focus:shadow-outline-none w-full text-left hover:bg-gray-600"
+                    class="focus:outline-none focus:shadow-outline-none w-full text-left hover:bg-gray-700"
                 >
                     <div class="select-none relative px-4 py-2">
                         <span class="block truncate" v-html="element" />

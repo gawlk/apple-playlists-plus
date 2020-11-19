@@ -12,11 +12,11 @@
     "vue": "^3.0.2"
   },
   "devDependencies": {
-    "@tailwindcss/ui": "^0.7.2",
     "@vue/compiler-sfc": "^3.0.2",
-    "autoprefixer": "^9.0.0",
+    "autoprefixer": "^9",
+    "postcss": "^7",
     "sirv-cli": "^1.0.8",
-    "tailwindcss": "^1.9.6",
+    "tailwindcss": "^2.0.1-compat",
     "vercel": "^20.1.4",
     "vite": "1.0.0-rc.9"
   }

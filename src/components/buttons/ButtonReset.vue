@@ -1,5 +1,7 @@
 <template>
-    <button class="px-4 py-3 bg-gray-800 rounded-r-lg group">
+    <button
+        class="px-4 py-3 bg-gray-800 rounded-r-lg group focus:outline-none focus:shadow-outline-none"
+    >
         <svg
             class="h-5 w-5 opacity-50 group-hover:opacity-75"
             xmlns="http://www.w3.org/2000/svg"

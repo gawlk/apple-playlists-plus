@@ -26,7 +26,7 @@ export const coshaInit = (ref) => {
         .cosha-clone {
             filter: blur(${blur}) brightness(${brightness}) saturate(${saturation});
             position: absolute;
-            width: ${width};
+            width: ${width} !important;
             z-index: -1;
             transform: translate3d(${x}, ${y}, 0);
         }

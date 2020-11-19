@@ -19,8 +19,8 @@
 
     import { getParams, setParam } from '/src/js/utils'
 
-    export { default as ButtonReset } from './ButtonReset.vue'
-    export { default as Listbox } from './Listbox.vue'
+    export { default as ButtonReset } from '../buttons/ButtonReset.vue'
+    export { default as Listbox } from '../listboxes/Listbox.vue'
 
     export const selectedValue = ref('')
 
