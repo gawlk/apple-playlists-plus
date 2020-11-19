@@ -76,7 +76,7 @@
                 {
                     findArtistsByPhrase(
                         phrase: "${value}",
-                        _size: 500,
+                        _size: 100,
                     ) {
                         data {
                             _id
