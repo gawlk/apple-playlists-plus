@@ -39,7 +39,6 @@
             {
                 allGenres(_size: 100000) {
                     data {
-                        _id
                         name
                     }
                 }
