@@ -3,8 +3,6 @@
         <div class="flex justify-center space-x-4 font-medium">
             <a
                 href="https://spotify-premium-playlists.vercel.app/"
-                rel="noopener noreferrer"
-                target="_blank"
                 class="outline-none opacity-50 hover:opacity-75"
             >
                 Spotify version
