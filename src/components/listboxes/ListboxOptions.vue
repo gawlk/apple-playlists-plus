@@ -5,15 +5,15 @@
         leave-to-class="opacity-0"
     >
         <div
-            v-if="open"
-            :class="classes"
+            v-if="props.open"
+            :class="props.classes"
             class="absolute bottom-0 mb-13 w-full rounded-lg bg-gray-800"
         >
             <div
                 class="max-h-60 rounded-md py-2 text-base leading-6 overflow-auto focus:outline-none"
             >
                 <button
-                    v-for="(element, index) in elements"
+                    v-for="(element, index) in props.elements"
                     :key="`${index}-${element}`"
                     :value="element"
                     @click="select(element, index)"
@@ -28,18 +28,18 @@
     </transition>
 </template>
 
-<script setup="props, { emit }">
-    import { ref } from 'vue'
+<script setup>
+    import { defineEmit, defineProps } from 'vue'
 
-    export default {
-        props: {
-            elements: Array,
-            open: Boolean,
-            classes: String,
-        },
-    }
+    const emit = defineEmit()
 
-    export const select = (element, index) => {
+    const props = defineProps({
+        elements: Array,
+        open: Boolean,
+        classes: String,
+    })
+
+    const select = (element, index) => {
         emit('select', element)
         emit('selectIndex', index)
     }

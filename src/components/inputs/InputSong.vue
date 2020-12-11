@@ -17,47 +17,44 @@
     </div>
 </template>
 
-<script setup="props, { emit }">
-    import { onMounted, ref } from 'vue'
+<script setup>
+    import { onMounted, defineEmit } from 'vue'
 
-    import { createClient } from '/src/js/clients'
-    import { getParams, setParam } from '/src/js/utils'
+    import { fetchGQL, getParams, setParam } from '/src/js/utils'
 
-    export { default as ButtonReset } from '../buttons/ButtonReset.vue'
-    export { default as ListboxOptions } from '../listboxes/ListboxOptions.vue'
-    export { default as Input } from './Input.vue'
+    import ButtonReset from '../buttons/ButtonReset.vue'
+    import ListboxOptions from '../listboxes/ListboxOptions.vue'
+    import Input from './Input.vue'
 
-    const client = createClient()
-
-    export const input = ref('')
-
-    export const songs = ref([])
+    const emit = defineEmit()
 
     const queue = []
 
-    export const songToValue = (song) =>
+    ref: input = ''
+
+    ref: songs = []
+
+    const songToValue = (song) =>
         `${song.name} - Artist(s): ${song.artists.data
             .map((y) => y.name)
             .join(', ')}`
 
     const getNameByID = async (id) => {
         if (id) {
-            let result = await client.executeQuery({
-                query: `
-                    {
-                        findSongByID(
-                            id: "${id}"
-                        ) {
-                            name
-                            artists {
-                                data {
-                                    name
-                                }
+            let result = await fetchGQL(`
+                {
+                    findSongByID(
+                        id: "${id}"
+                    ) {
+                        name
+                        artists {
+                            data {
+                                name
                             }
                         }
                     }
-                `,
-            })
+                }
+            `)
 
             if (result?.data?.findSongByID) {
                 return songToValue(result.data.findSongByID)
@@ -70,22 +67,22 @@
     }
 
     onMounted(async () => {
-        input.value = await getNameByID(getParams().value)
+        input = await getNameByID(getParams().value)
 
         window.addEventListener('popstate', async () => {
-            input.value = await getNameByID(getParams().value)
+            input = await getNameByID(getParams().value)
         })
     })
 
-    export const select = (index) => {
-        const song = songs.value[index]
-        input.value = songToValue(song)
+    const select = (index) => {
+        const song = songs[index]
+        input = songToValue(song)
         emit('update', { value: song._id })
-        songs.value = []
+        songs = []
     }
 
-    export const process = async (value) => {
-        input.value = value
+    const process = async (value) => {
+        input = value
 
         if (value) {
             const query = `
@@ -109,17 +106,15 @@
 
             queue.push(query)
 
-            const result = await client.executeQuery({
-                query,
-            })
+            const result = await fetchGQL(query)
 
             if (queue[queue.length - 1] === query) {
-                songs.value = result.data.findSongsByPhrase.data
+                songs = result.data.findSongsByPhrase.data
             }
 
             queue.shift()
         } else {
-            songs.value = []
+            songs = []
 
             emit('reset')
         }

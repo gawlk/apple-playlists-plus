@@ -1,7 +1,7 @@
 <template>
     <div class="flex-1 flex space-x-1">
         <Listbox
-            :elements="data?.allGenres?.data.map((x) => x.name).sort() || []"
+            :elements="genres?.data.map((x) => x.name).sort() || []"
             :selectedValue="selectedValue"
             @select="select"
             defaultEmpty
@@ -13,44 +13,47 @@
     </div>
 </template>
 
-<script setup="props, { emit }">
-    import { onMounted, ref } from 'vue'
-    import { useQuery } from 'villus'
+<script setup>
+    import { onMounted, defineEmit } from 'vue'
 
-    import { getParams, setParam } from '/src/js/utils'
+    import { fetchGQL, getParams, setParam } from '/src/js/utils'
 
-    export { default as ButtonReset } from '../buttons/ButtonReset.vue'
-    export { default as Listbox } from '../listboxes/Listbox.vue'
+    import ButtonReset from '../buttons/ButtonReset.vue'
+    import Listbox from '../listboxes/Listbox.vue'
 
-    export const selectedValue = ref('')
+    const emit = defineEmit()
 
-    export const select = (value) => {
-        if (!value || selectedValue.value === value) {
-            selectedValue.value = ''
+    ref: selectedValue = ''
+
+    ref: genres
+
+    const select = (value) => {
+        if (!value || selectedValue === value) {
+            selectedValue = ''
             emit('reset')
         } else {
-            selectedValue.value = value
+            selectedValue = value
             emit('update', { value })
         }
     }
 
-    export const { data } = useQuery({
-        query: `
-            {
-                allGenres(_size: 100000) {
-                    data {
-                        name
+    onMounted(async () => {
+        genres = (
+            await fetchGQL(`
+                {
+                    allGenres(_size: 100000) {
+                        data {
+                            name
+                        }
                     }
                 }
-            }
-        `,
-    })
+            `)
+        ).data.allGenres
 
-    onMounted(() => {
         window.addEventListener('popstate', () => {
             const value = getParams().value
 
-            selectedValue.value = value || ''
+            selectedValue = value || ''
         })
     })
 </script>

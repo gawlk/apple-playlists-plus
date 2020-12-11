@@ -9,26 +9,26 @@
     </div>
 </template>
 
-<script setup="props, { emit }">
-    import { onMounted, ref } from 'vue'
+<script setup>
+    import { onMounted, defineEmit } from 'vue'
 
     import { getParams, setParam } from '/src/js/utils'
 
-    export { default as ButtonReset } from '../buttons/ButtonReset.vue'
-    export { default as Input } from './Input.vue'
+    import ButtonReset from '../buttons/ButtonReset.vue'
+    import Input from './Input.vue'
 
-    export const input = ref(getParams().value || '')
+    const emit = defineEmit()
 
-    export const process = (value) => {
-        input.value = value
+    ref: input = getParams().value || ''
+
+    const process = (value) => {
+        input = value
         value ? emit('update', { value }) : emit('reset')
     }
 
     onMounted(() => {
         window.addEventListener('popstate', () => {
-            const value = getParams().value
-
-            input.value = value || ''
+            input = getParams().value || ''
         })
     })
 </script>

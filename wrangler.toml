@@ -1,0 +1,10 @@
+name = "apple-playlists-plus"
+type = "webpack"
+account_id = "4908369861af64706ae18324d72b6092"
+workers_dev = true
+route = ""
+zone_id = ""
+
+[site]
+bucket = "dist"
+entry-point = "workers-site"

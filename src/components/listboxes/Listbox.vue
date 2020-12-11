@@ -2,27 +2,31 @@
     <Listbox
         as="div"
         class="space-y-1 sm:space-y-2"
-        :modelValue="selectedValue"
+        :modelValue="props.selectedValue"
         @update:modelValue="update"
         v-slot="{ open }"
     >
-        <ListboxLabel v-if="label" class="block font-bold opacity-75">
-            {{ label }}
+        <ListboxLabel v-if="props.label" class="block font-bold opacity-75">
+            {{ props.label }}
         </ListboxLabel>
-        <div :class="!removeRelativeClass && 'relative'">
+        <div :class="!props.removeRelativeClass && 'relative'">
             <ListboxButton
-                :class="[roundedClasses ? roundedClasses : 'rounded-lg']"
+                :class="[
+                    props.roundedClasses ? props.roundedClasses : 'rounded-lg',
+                ]"
                 class="relative w-full bg-gray-800 flex items-center px-4 py-3 space-x-2 text-left focus:outline-none transition ease-in-out duration-300"
             >
                 <span
-                    v-if="icons"
+                    v-if="props.icons"
                     class="flex items-center pointer-events-none opacity-50"
-                    v-html="icons[elements.indexOf(selectedValue)]"
+                    v-html="
+                        props.icons[props.elements.indexOf(props.selectedValue)]
+                    "
                 />
                 <span
                     class="block truncate font-medium flex-1"
-                    :class="!selectedValue && 'text-gray-500'"
-                    v-html="selectedValue || placeholder"
+                    :class="!props.selectedValue && 'text-gray-500'"
+                    v-html="props.selectedValue || props.placeholder"
                 />
                 <span class="flex items-center pointer-events-none">
                     <svg
@@ -54,7 +58,7 @@
                         class="max-h-60 rounded-md py-2 text-base leading-6 overflow-auto focus:outline-none"
                     >
                         <ListboxOption
-                            v-for="element in elements"
+                            v-for="element in props.elements"
                             :key="element"
                             :value="element"
                             v-slot="{ selected, active }"
@@ -99,9 +103,9 @@
     </Listbox>
 </template>
 
-<script setup="props, { emit }">
-    import { ref, watchEffect } from 'vue'
-    export {
+<script setup>
+    import { defineEmit, defineProps } from 'vue'
+    import {
         Listbox,
         ListboxLabel,
         ListboxButton,
@@ -109,19 +113,19 @@
         ListboxOption,
     } from '@headlessui/vue'
 
-    export default {
-        props: {
-            elements: Array,
-            icons: Array,
-            label: String,
-            removeRelativeClass: Boolean,
-            selectedValue: String,
-            roundedClasses: String,
-            placeholder: String,
-        },
-    }
+    const emit = defineEmit()
 
-    export const update = (value) => {
+    const props = defineProps({
+        elements: Array,
+        icons: Array,
+        label: String,
+        placeholder: String,
+        removeRelativeClass: Boolean,
+        roundedClasses: String,
+        selectedValue: String,
+    })
+
+    const update = (value) => {
         emit('select', value)
         emit('selectIndex', props.elements.indexOf(value))
     }

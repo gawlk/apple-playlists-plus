@@ -21,5 +21,5 @@
 </template>
 
 <script setup>
-    export const url = window.location.origin
+    const url = window.location.origin
 </script>

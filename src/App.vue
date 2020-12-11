@@ -38,15 +38,13 @@
                 </div>
                 <p class="text-xs font-medium opacity-50 px-1">
                     Database:
-                    {{ counterArtists ? counterArtists.countArtists : '?' }}
+                    {{ counterArtists || '?' }}
                     artists ·
-                    {{ counterGenres ? counterGenres.countGenres : '?' }}
+                    {{ counterGenres || '?' }}
                     genres ·
-                    {{
-                        counterPlaylists ? counterPlaylists.countPlaylists : '?'
-                    }}
+                    {{ counterPlaylists || '?' }}
                     playlists ·
-                    {{ counterSongs ? counterSongs.countSongs : '?' }}
+                    {{ counterSongs || '?' }}
                     songs
                 </p>
             </div>
@@ -99,59 +97,45 @@
 </template>
 
 <script setup>
-    import { onMounted, ref } from 'vue'
-    import { useQuery } from 'villus'
+    import { onMounted } from 'vue'
 
-    import { createClient, useClient } from '/src/js/clients'
-    import { getParams, setParam } from '/src/js/utils'
+    import { fetchGQL, getParams, setParam } from '/src/js/utils'
 
-    export { default as Button } from '/src/components/buttons/Button.vue'
-    export { default as Card } from '/src/components/Card.vue'
-    export { default as Footer } from '/src/components/Footer.vue'
-    export { default as Header } from '/src/components/Header.vue'
-    export { default as InputArtist } from '/src/components/inputs/InputArtist.vue'
-    export { default as InputGenres } from '/src/components/inputs/InputGenres.vue'
-    export { default as InputSong } from '/src/components/inputs/InputSong.vue'
-    export { default as InputWords } from '/src/components/inputs/InputWords.vue'
-    export { default as Listbox } from '/src/components/listboxes/Listbox.vue'
-    export { default as Spinner } from '/src/components/Spinner.vue'
-
-    const client = createClient()
-
-    useClient()
+    import Button from '/src/components/buttons/Button.vue'
+    import Card from '/src/components/Card.vue'
+    import Footer from '/src/components/Footer.vue'
+    import Header from '/src/components/Header.vue'
+    import InputArtist from '/src/components/inputs/InputArtist.vue'
+    import InputGenres from '/src/components/inputs/InputGenres.vue'
+    import InputSong from '/src/components/inputs/InputSong.vue'
+    import InputWords from '/src/components/inputs/InputWords.vue'
+    import Listbox from '/src/components/listboxes/Listbox.vue'
+    import Spinner from '/src/components/Spinner.vue'
 
     const queue = []
 
-    export const cursorBefore = ref(null)
+    ref: cursorBefore = null
 
-    export const cursorAfter = ref(null)
+    ref: cursorAfter = null
 
-    export const playlists = ref()
+    ref: selectedIndex = 0
 
-    export const selectedIndex = ref(0)
+    ref: playlists
 
-    export const { data: counterArtists } = useQuery({
-        query: `{ countArtists }`,
-    })
+    ref: counterArtists
 
-    export const { data: counterGenres } = useQuery({
-        query: `{ countGenres }`,
-    })
+    ref: counterGenres
 
-    export const { data: counterPlaylists } = useQuery({
-        query: `{ countPlaylists }`,
-    })
+    ref: counterPlaylists
 
-    export const { data: counterSongs } = useQuery({
-        query: `{ countSongs }`,
-    })
+    ref: counterSongs
 
-    export const select = (index) => {
+    const select = (index) => {
         const { mode } = getParams()
 
         if (Number(mode) !== index) {
             setParam('mode', index)
-            selectedIndex.value = index
+            selectedIndex = index
             fetchPlaylists()
         }
     }
@@ -185,7 +169,7 @@
             }
         }
 
-        playlists.value = null
+        playlists = null
 
         const query = `
             {
@@ -208,17 +192,15 @@
 
         queue.push(query)
 
-        let result = await client.executeQuery({
-            query,
-        })
+        let result = await fetchGQL(query)
 
         if (result && result.data) {
             result = result.data[queryName]
 
             if (queue[queue.length - 1] === query) {
-                cursorBefore.value = result.before
-                playlists.value = result.data
-                cursorAfter.value = result.after
+                cursorBefore = result.before
+                playlists = result.data
+                cursorAfter = result.after
             }
 
             queue.shift()
@@ -227,49 +209,58 @@
         }
     }
 
-    export const fetchBefore = () => {
-        setParam('cursor', cursorBefore.value)
+    const fetchBefore = () => {
+        setParam('cursor', cursorBefore)
 
         window.scrollTo({ top: 0, behavior: 'smooth' })
 
         fetchPlaylists()
     }
 
-    export const fetchAfter = () => {
-        setParam('cursor', cursorAfter.value)
+    const fetchAfter = () => {
+        setParam('cursor', cursorAfter)
 
         window.scrollTo({ top: 0, behavior: 'smooth' })
 
         fetchPlaylists()
     }
 
-    export const process = (value) => {
+    const process = (value) => {
         setParam('value', value.value)
 
         fetchPlaylists()
     }
 
-    export const reset = () => {
+    const reset = () => {
         setParam('value')
 
         fetchPlaylists()
     }
 
-    onMounted(() => {
+    onMounted(async () => {
         getParams().mode || setParam('mode', 0)
 
-        selectedIndex.value = Number(getParams().mode)
+        selectedIndex = Number(getParams().mode)
 
         fetchPlaylists()
 
         window.addEventListener('popstate', () => {
-            selectedIndex.value = Number(getParams().mode) || 0
+            selectedIndex = Number(getParams().mode) || 0
 
             fetchPlaylists()
         })
+
+        counterArtists = (await fetchGQL(`{ countArtists }`)).data.countArtists
+
+        counterGenres = (await fetchGQL(`{ countGenres }`)).data.countGenres
+
+        counterPlaylists = (await fetchGQL(`{ countPlaylists }`)).data
+            .countPlaylists
+
+        counterSongs = (await fetchGQL(`{ countSongs }`)).data.countSongs
     })
 
-    export const options = [
+    const options = [
         {
             name: 'Artist',
             icon: `

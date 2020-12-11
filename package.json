@@ -3,21 +3,19 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vite build"
+    "build": "vite build",
+    "workers:dev": "yarn build && wrangler dev",
+    "workers:publish": "yarn build && wrangler publish"
   },
   "dependencies": {
     "@headlessui/vue": "^0.2.0",
-    "graphql": "^15.4.0",
-    "villus": "^1.0.0-rc.4",
-    "vue": "^3.0.2"
+    "vue": "^3.0.4"
   },
   "devDependencies": {
-    "@vue/compiler-sfc": "^3.0.2",
+    "@vue/compiler-sfc": "^3.0.4",
     "autoprefixer": "^9",
     "postcss": "^7",
-    "sirv-cli": "^1.0.8",
     "tailwindcss": "^2.0.1-compat",
-    "vercel": "^20.1.4",
-    "vite": "1.0.0-rc.9"
+    "vite": "1.0.0-rc.13"
   }
 }

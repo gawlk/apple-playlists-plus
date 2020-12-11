@@ -17,37 +17,34 @@
     </div>
 </template>
 
-<script setup="props, { emit }">
-    import { onMounted, ref } from 'vue'
+<script setup>
+    import { onMounted, defineEmit } from 'vue'
 
-    import { createClient } from '/src/js/clients'
-    import { getParams, setParam } from '/src/js/utils'
+    import { fetchGQL, getParams, setParam } from '/src/js/utils'
 
-    export { default as ButtonReset } from '../buttons/ButtonReset.vue'
-    export { default as ListboxOptions } from '../listboxes/ListboxOptions.vue'
-    export { default as Input } from './Input.vue'
+    import ButtonReset from '../buttons/ButtonReset.vue'
+    import ListboxOptions from '../listboxes/ListboxOptions.vue'
+    import Input from './Input.vue'
 
-    const client = createClient()
-
-    export const input = ref('')
-
-    export const artists = ref([])
+    const emit = defineEmit()
 
     const queue = []
 
+    ref: input = ''
+
+    ref: artists = []
+
     const getNameByID = async (id) => {
         if (id) {
-            let result = await client.executeQuery({
-                query: `
-                    {
-                        findArtistByID(
-                            id: "${id}"
-                        ) {
-                            name
-                        }
+            let result = await fetchGQL(`
+                {
+                    findArtistByID(
+                        id: "${id}"
+                    ) {
+                        name
                     }
-                `,
-            })
+                }
+            `)
             return result?.data?.findArtistByID?.name || ''
         } else {
             return ''
@@ -55,21 +52,21 @@
     }
 
     onMounted(async () => {
-        input.value = await getNameByID(getParams().value)
+        input = await getNameByID(getParams().value)
 
         window.addEventListener('popstate', async () => {
-            input.value = await getNameByID(getParams().value)
+            input = await getNameByID(getParams().value)
         })
     })
 
-    export const select = (index) => {
-        input.value = artists.value[index].name
-        emit('update', { value: artists.value[index]._id })
-        artists.value = []
+    const select = (index) => {
+        input = artists[index].name
+        emit('update', { value: artists[index]._id })
+        artists = []
     }
 
-    export const process = async (value) => {
-        input.value = value
+    const process = async (value) => {
+        input = value
 
         if (value) {
             const query = `
@@ -88,17 +85,15 @@
 
             queue.push(query)
 
-            const result = await client.executeQuery({
-                query,
-            })
+            const result = await fetchGQL(query)
 
             if (queue[queue.length - 1] === query) {
-                artists.value = result.data.findArtistsByPhrase.data
+                artists = result.data.findArtistsByPhrase.data
             }
 
             queue.shift()
         } else {
-            artists.value = []
+            artists = []
             emit('reset')
         }
     }

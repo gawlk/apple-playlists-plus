@@ -1,3 +1,17 @@
+export const fetchGQL = async (query, variables) => {
+    const result = await fetch('/api/fetch', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ query, variables }),
+    })
+
+    if (result.status === 200) {
+        return await result.json()
+    }
+}
+
 export const getParams = () => {
     const params = {}
 
