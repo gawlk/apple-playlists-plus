@@ -5,7 +5,7 @@
         leave-to-class="opacity-0"
     >
         <div
-            v-if="props.open"
+            v-show="props.open"
             :class="props.classes"
             class="absolute bottom-0 mb-13 w-full rounded-lg bg-gray-800"
         >
