@@ -50,7 +50,7 @@
                 leave-to-class="opacity-0"
             >
                 <div
-                    v-if="open"
+                    v-show="open"
                     class="absolute bottom-0 mb-13 w-full rounded-lg bg-gray-800"
                 >
                     <ListboxOptions
