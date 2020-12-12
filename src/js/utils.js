@@ -27,11 +27,9 @@ export const setParam = (key, value = '') => {
 
     // SPA navigation edge cases
     if (key === 'mode') {
-        if (params.value) {
-            delete params['value']
-            delete params['cursor']
-        }
-    } else if (key === 'value' && String(value)) {
+        delete params['value']
+        delete params['cursor']
+    } else if (key === 'value') {
         delete params['cursor']
     }
 
