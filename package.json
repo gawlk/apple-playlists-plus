@@ -1,9 +1,15 @@
 {
   "name": "apple-playlists-plus",
+  "description": "A better way to discover new playlists on Apple Music",
   "version": "1.0.0",
+  "homepage": "https://apple-playlists-plus.gawlk.workers.dev/",
+  "author": {
+    "name": "Kevin Gawlik (gawlk)",
+    "url": "https://github.com/gawlk"
+  },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && gulp",
     "workers:dev": "yarn build && wrangler dev",
     "workers:publish": "yarn build && wrangler publish"
   },
@@ -14,6 +20,11 @@
   "devDependencies": {
     "@vue/compiler-sfc": "^3.0.4",
     "autoprefixer": "^9",
+    "del": "^6.0.0",
+    "favicons": "^6.2.0",
+    "gulp": "^4.0.2",
+    "gulp-inject": "^5.0.5",
+    "gulp-string-replace": "^1.1.2",
     "postcss": "^7",
     "tailwindcss": "^2.0.1-compat",
     "vite": "1.0.0-rc.13"

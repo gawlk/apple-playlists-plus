@@ -1,0 +1,48 @@
+{
+  "appName": "Apple Playlists ➕",
+  "appShortName": "AP➕",
+
+  "path": "/favicons/",
+
+  "background": "#121b20",
+  "theme_color": "#121b20",
+  "appleStatusBarStyle": "black-translucent",
+
+  "scope": "/",
+  "start_url": "/",
+
+  "display": "standalone",
+  "orientation": "portrait",
+
+  "logging": false,
+  "html": "icons.html",
+  "pipeHTML": true,
+  "replace": true,
+
+  "icons": {
+    "android": {
+      "background": "#121b20",
+      "offset": 5
+    },
+    "appleIcon": {
+      "offset": 5
+    },
+    "appleStartup": {
+      "offset": 10
+    },
+    "coast": false,
+    "favicons": {
+      "background": "#121b20",
+      "offset": 5
+    },
+    "firefox": {
+      "offset": 10,
+      "overlayGlow": false
+    },
+    "windows": {
+      "background": "#121b20",
+      "offset": 5
+    },
+    "yandex": false
+  }
+}

@@ -238,7 +238,7 @@
     }
 
     onMounted(async () => {
-        getParams().mode || setParam('mode', 0)
+        getParams().mode || setParam('mode', 0, true)
 
         selectedIndex = Number(getParams().mode)
 

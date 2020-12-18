@@ -22,7 +22,7 @@ export const getParams = () => {
     return params
 }
 
-export const setParam = (key, value = '') => {
+export const setParam = (key, value = '', replace = false) => {
     const params = getParams()
 
     // SPA navigation edge cases
@@ -47,5 +47,9 @@ export const setParam = (key, value = '') => {
 
     paramsString = paramsString.slice(0, -1)
 
-    window.history.pushState({}, null, paramsString)
+    if (replace) {
+        window.history.replaceState({}, null, paramsString)
+    } else {
+        window.history.pushState({}, null, paramsString)
+    }
 }

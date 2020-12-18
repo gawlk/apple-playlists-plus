@@ -29,7 +29,7 @@
             </a>
         </div>
         <p class="p-4 text-center text-xs font-medium opacity-50">
-            © {{ new Date().getFullYear() }} Spotify Premium Playlists, No right
+            © {{ new Date().getFullYear() }} Apple Playlists ➕, No right
             reserved.
         </p>
     </footer>
