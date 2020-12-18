@@ -1,6 +1,6 @@
 <template>
     <div
-        class="max-w-5xl w-full min-h-screen mx-auto px-4 pt-12 pb-16 space-y-24"
+        class="max-w-5xl w-full min-h-screen mx-auto px-4 pt-12 pb-16 space-y-16 sm:space-y-24"
     >
         <Header />
 
@@ -37,7 +37,7 @@
                     />
                 </div>
                 <p class="text-xs font-medium opacity-50 px-1">
-                    Database:
+                    Database (updates daily):
                     {{ counterArtists || '?' }}
                     artists ·
                     {{ counterGenres || '?' }}

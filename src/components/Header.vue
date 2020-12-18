@@ -7,13 +7,13 @@
                     style="color: #ffe9eb"
                     class="text-4xl sm:text-6xl font-bold"
                 >
-                    <span class="font-thin"> Apple</span> Playlists +
+                    <span class="font-thin">Apple</span> Playlists +
                 </p>
                 <p
                     style="color: #e6424a"
                     class="text-lg sm:text-2xl font-medium"
                 >
-                    A better way to search for playlists
+                    A better way to discover new playlists
                 </p>
             </div>
         </a>

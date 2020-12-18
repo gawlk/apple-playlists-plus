@@ -1,6 +1,8 @@
 <template>
     <footer class="space-y-4">
-        <div class="flex justify-center space-x-4 font-medium">
+        <div
+            class="flex justify-center text-center font-medium space-x-2 sm:space-x-4 text-xs xs:text-sm sm:text-base"
+        >
             <a
                 href="https://spotify-premium-playlists.gawlk.workers.dev/"
                 class="outline-none opacity-50 hover:opacity-75"
