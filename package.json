@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build && gulp",
-    "workers:dev": "yarn build && wrangler dev",
+    "workers:dev": "vite build && wrangler dev",
     "workers:publish": "yarn build && wrangler publish"
   },
   "dependencies": {

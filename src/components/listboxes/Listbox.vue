@@ -54,15 +54,22 @@
                     class="absolute bottom-0 mb-13 w-full rounded-lg bg-gray-800"
                 >
                     <ListboxOptions
+                        ref="optionsParent"
                         static
                         class="max-h-60 rounded-md py-2 text-base leading-6 overflow-auto focus:outline-none"
                     >
                         <ListboxOption
-                            v-for="element in props.elements"
+                            v-for="(element, i) in props.elements"
+                            :ref="
+                                (el) => {
+                                    options[i] = el
+                                }
+                            "
                             :key="element"
                             :value="element"
                             v-slot="{ selected, active }"
                             class="focus:outline-none"
+                            style="height: 40px"
                         >
                             <div
                                 :class="`${
@@ -104,7 +111,13 @@
 </template>
 
 <script setup>
-    import { defineEmit, defineProps } from 'vue'
+    import {
+        onMounted,
+        onUnmounted,
+        defineEmit,
+        defineProps,
+        nextTick,
+    } from 'vue'
     import {
         Listbox,
         ListboxLabel,
@@ -112,6 +125,10 @@
         ListboxOptions,
         ListboxOption,
     } from '@headlessui/vue'
+
+    ref: optionsParent
+
+    ref: options = []
 
     const emit = defineEmit()
 
@@ -129,4 +146,29 @@
         emit('select', value)
         emit('selectIndex', props.elements.indexOf(value))
     }
+
+    //     const onScroll = async () => {
+    //         await nextTick()
+    //         await nextTick()
+    //
+    //         console.log(optionsParent.el.getBoundingClientRect())
+    //         console.log(options[0])
+    //
+    //         const rectParent = optionsParent.el.getBoundingClientRect()
+    //         options.forEach((option) => {
+    //             const rect = option.el.getBoundingClientRect()
+    //             option.el.children.hidden =
+    //                 rect.top > rectParent.bottom || rect.bottom < rectParent.top
+    //         })
+    //     }
+    //
+    //     onMounted(() => {
+    //         optionsParent?.el.addEventListener('scroll', onScroll, {
+    //             passive: true,
+    //         })
+    //     })
+    //
+    //     onUnmounted(() => {
+    //         optionsParent?.el.removeEventListener('scroll', onScroll)
+    //     })
 </script>

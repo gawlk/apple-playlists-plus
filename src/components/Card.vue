@@ -11,7 +11,7 @@
             :src="
                 props.playlist.artwork.replace('{w}', 200).replace('{h}', 200)
             "
-            @load="updateImage('image-' + props.playlist._id)"
+            @load="updateImage"
         />
         <div class="text-xs font-medium -space-y-0.5 px-1">
             <p class="truncate font-semibold">
@@ -34,5 +34,5 @@
 
     ref: image = undefined
 
-    const updateImage = (id) => coshaUpdateImage(image)
+    const updateImage = () => coshaUpdateImage(image)
 </script>

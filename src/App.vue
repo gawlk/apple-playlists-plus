@@ -43,9 +43,10 @@
                     {{ counterGenres || '?' }}
                     genres ·
                     {{ counterPlaylists || '?' }}
-                    playlists ·
+                    playlists
+                    <!-- playlists ·
                     {{ counterSongs || '?' }}
-                    songs
+                    songs -->
                 </p>
             </div>
             <div v-if="playlists" class="space-y-16">
@@ -128,7 +129,7 @@
 
     ref: counterPlaylists
 
-    ref: counterSongs
+    // ref: counterSongs
 
     const select = (index) => {
         const { mode } = getParams()
@@ -250,14 +251,14 @@
             fetchPlaylists()
         })
 
-        counterArtists = (await fetchGQL(`{ countArtists }`)).data.countArtists
+        counterArtists = (await fetchGQL(`{ countArtists }`))?.data.countArtists
 
-        counterGenres = (await fetchGQL(`{ countGenres }`)).data.countGenres
+        counterGenres = (await fetchGQL(`{ countGenres }`))?.data.countGenres
 
-        counterPlaylists = (await fetchGQL(`{ countPlaylists }`)).data
+        counterPlaylists = (await fetchGQL(`{ countPlaylists }`))?.data
             .countPlaylists
 
-        counterSongs = (await fetchGQL(`{ countSongs }`)).data.countSongs
+        // counterSongs = (await fetchGQL(`{ countSongs }`))?.data.countSongs
     })
 
     const options = [
